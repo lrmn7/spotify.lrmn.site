@@ -76,10 +76,14 @@ const Home: NextPage<HomeProps> = ({ clientId, clientSecret, refreshToken }) => 
         <meta
           name="og:description"
           content={`L RMN is currently listening to ${
-            currentTrack ? currentTrack.item.name + " by " + currentTrack.item.artists[0].name : "nothing"
+            currentTrack && currentTrack.item && !currentTrack.item.is_ad
+              ? currentTrack.item.name + " by " + currentTrack.item.artists[0].name
+              : "nothing"
           }`}
         />
-        <meta name="og:image" content={currentTrack ? currentTrack.item.album.images[0].url : ""} />
+        {currentTrack && currentTrack.item && currentTrack.item.album && currentTrack.item.album.images[0] && (
+          <meta name="og:image" content={currentTrack.item.album.images[0].url} />
+        )}
       </Head>
 
       <div className="w-[100vw] h-[100vh] flex items-center justify-center text-white z-[20]">
